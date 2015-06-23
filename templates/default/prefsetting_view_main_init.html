@@ -1,0 +1,60 @@
+<{strip}>
+<{*テンプレート内容をここに記述*}>
+<div class="top_description share_top_description">
+登録フォームの項目名に都道府県が含まれているデータを表示します。
+</div>
+<form id="prefsettingForm<{$id}>" class="outerdiv" action="#" onsubmit="return false;">
+	<input type="hidden" name="action" value="prefsetting_action_main_init" />
+	<table class="widthmax grid_header" summary="">
+		<tr>
+			<th class="align-left nowrap">
+				登録フォーム名
+			</th>
+			<th class="align-left nowrap">
+				項目名
+			</th>
+			<th class="align-left nowrap">
+				項目選択値(現在)
+			</th>
+			<th class="align-left nowrap">
+				空行
+			</th>
+			<th class="align-left nowrap">
+				その他
+			</th>
+			<th class="align-left nowrap">
+			</th>
+		</tr>
+		<{foreach name="regist_list" key="key" item="val" from=$action.content}>
+			<tr class="grid_row">
+				<td class="align-left nowrap">
+					<{$val.registration_name}>
+				</td>
+				<td class="align-left nowrap">
+					<{$val.item_name}>
+				</td>
+				<td class="align-left nowrap selectlist">
+					<select name="prefsetting_list">
+						<{foreach from=$val.option_values|smarty:nodefaults item=option_value name=option_value}>
+							<option value="<{$option_value}>">
+								<{$option_value}>
+							</option>
+						<{/foreach}>
+					</select>
+				</td>
+				<td class="align-center nowrap">
+					<input id="prefsetting_space_<{$val.item_id}>" type="checkbox" name="space_flag[<{$val.item_id}>]" />
+				</td>
+				<td class="align-center nowrap">
+					<input id="prefsetting_ather_<{$val.item_id}>" type="checkbox" name="ather_flag[<{$val.item_id}>]" />
+				</td>
+				<td class="align-left nowrap">
+					<input type="button" value="更新する" onclick="prefsettingCls['<{$id}>'].update(<{$val.item_id}>);return false;">
+				</td>
+			</tr>
+		<{/foreach}>
+	</table>
+</form>
+
+<{include file="prefsetting_script.html"}>
+<{/strip}>
